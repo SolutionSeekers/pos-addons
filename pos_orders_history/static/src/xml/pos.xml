@@ -19,7 +19,7 @@
                         <i class='fa fa-angle-double-left'></i>
                         Back
                     </span>
-                    <span class="filters">
+                    <!-- <span class="filters">
                         <i class='fa fa-filter'></i>
                         Filters
                         <span class="button user-filter">
@@ -31,7 +31,7 @@
                         <span class="button table-filter">
                             Table
                         </span>
-                    </span>
+                    </span> -->
                     <span t-if="widget.pos.config.load_barcode_order_only" class="button scan-barcode">Scan Barcode</span>
                     <span class='searchbox'>
                         <input placeholder='Search Orders' />
