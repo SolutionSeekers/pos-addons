@@ -11,10 +11,12 @@ odoo.define('pos_orders_history.screens', function (require) {
     var PopupWidget = require('point_of_sale.popups');
     var rpc = require('web.rpc');
     var _t = core._t;
+    var act_filter = false;
 
     screens.OrdersHistoryButton = screens.ActionButtonWidget.extend({
         template: 'OrdersHistoryButton',
         button_click: function () {
+            act_filter=false;
             this.gui.show_screen('orders_history_screen');
         },
     });
@@ -49,11 +51,30 @@ odoo.define('pos_orders_history.screens', function (require) {
             this.clear_list_widget();
 
             this.$('.back').click(function () {
+                act_filter=false;
                 self.gui.show_screen('products');
             });
-
+            
             var orders = this.pos.db.get_sorted_orders_history(1000, self);
             this.render_list(orders);
+
+            if(act_filter==false)
+            {
+                act_filter = true;
+                this.$('.filters .user-filter').removeClass("active");
+                this.remove_active_filter("user");
+                
+                this.$('.filters .pos-filter').removeClass("active");
+                this.remove_active_filter("pos");
+                
+                this.$('.filters .table-filter').removeClass("active");
+                this.remove_active_filter("table");
+
+                this.$('.filters .session-filter').removeClass("active");
+                this.remove_active_filter("session");
+
+                self.change_filter('session', this.$('.filters .session-filter'));
+            }
 
             this.$('.filters .user-filter').click(function (e) {
                 e.stopImmediatePropagation();
@@ -68,6 +89,10 @@ odoo.define('pos_orders_history.screens', function (require) {
             this.$('.filters .table-filter').click(function (e) {
                 e.stopImmediatePropagation();
                 self.change_filter('table', $(this));
+            });
+            this.$('.filters .session-filter').click(function (e) {
+                e.stopImmediatePropagation();
+                self.change_filter('session', $(this));
             });
 
             this.$('.order-list-contents').delegate('.order-line td', 'click', function (event) {
@@ -204,6 +229,14 @@ odoo.define('pos_orders_history.screens', function (require) {
                 }
                 return orders.filter(function(order) {
                     return !order.table_id;
+                });
+            }
+            else if (filter === "session")
+            {
+                var session_id = self.pos.pos_session.id;
+                
+                return orders.filter(function(order) {
+                    return order.session_id[0] === session_id;
                 });
             }
         },

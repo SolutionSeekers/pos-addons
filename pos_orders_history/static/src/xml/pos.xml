@@ -19,7 +19,7 @@
                         <i class='fa fa-angle-double-left'></i>
                         Back
                     </span>
-                    <!-- <span class="filters">
+                    <span class="filters">
                         <i class='fa fa-filter'></i>
                         Filters
                         <span class="button user-filter">
@@ -28,10 +28,13 @@
                         <span class="button pos-filter">
                             POS
                         </span>
-                        <span class="button table-filter">
+                        <!-- <span class="button table-filter">
                             Table
+                        </span> -->
+                        <span class="button session-filter">
+                            Sesión
                         </span>
-                    </span> -->
+                    </span>
                     <span t-if="widget.pos.config.load_barcode_order_only" class="button scan-barcode">Scan Barcode</span>
                     <span class='searchbox'>
                         <input placeholder='Search Orders' />
@@ -54,7 +57,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Order Ref</th>
-                                                <th>Customer</th>
+                                                <!-- <th>Customer</th> -->
                                                 <th>POS</th>
                                                 <th>Order Date</th>
                                                 <th>Salesman</th>
@@ -82,10 +85,10 @@
                 </span>
             </td>
 
-            <td>
+            <!-- <td>
                 <t t-if='order.partner_id' t-esc='order.partner_id[1]'/>
                 <t t-if='!order.partner_id' t-esc='""'/>
-            </td>
+            </td> -->
             <td><t t-esc='order.pos_name'/></td>
             <td><t t-esc='widget.get_datetime_format(order.date_order)' /></td>
             <td><t t-esc='order.user_id[1]' /></td>

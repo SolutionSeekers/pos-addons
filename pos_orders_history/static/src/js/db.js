@@ -65,18 +65,20 @@ odoo.define('pos_orders_history.db', function (require) {
             str = String(order.id) + ':' + str.replace(':','') + '\n';
             return str;
         },
-        get_sorted_orders_history: function (count, self) {
-            var new_sorted_orders = [];
-            this.sorted_orders.forEach(showSes);
+        // get_sorted_orders_history: function (count, self) {
+        //     var new_sorted_orders = [];
+        //     this.sorted_orders.forEach(showSes);
 
-            function showSes(order)
-            {
-                if(self.pos.pos_session.id == order.session_id[0])
-                {
-                    new_sorted_orders.push(order);
-                }
-            }
-            return new_sorted_orders.slice(0, count);
+        //     function showSes(order)
+        //     {
+        //         if(self.pos.pos_session.id == order.session_id[0])
+        //         {
+        //             new_sorted_orders.push(order);
+        //         }
+        //     }
+        //     return new_sorted_orders.slice(0, count);
+        get_sorted_orders_history: function (count, self) {
+            return this.sorted_orders.slice(0, count);
         },
         sorted_orders_history: function (orders) {
             var self = this;
