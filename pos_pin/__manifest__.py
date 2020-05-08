@@ -15,6 +15,7 @@
     'depends': ['point_of_sale'],
     'data': [
         'data.xml',
+        'views/pos_totp.xml',
     ],
 
     "price": 20.00,

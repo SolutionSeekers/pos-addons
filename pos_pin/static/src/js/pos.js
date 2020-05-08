@@ -101,16 +101,55 @@ odoo.define('pos_pin.pos', function (require) {
             return lock;
         },
 
+        show_pass_popup: function(password, lock){
+            var self = this;
+
+            // var rpc = require('web.rpc');
+            // var par = {
+            //     model: 'pos.session',
+            //     method: 'get_pyopt',
+            // }
+            //var totp = "";
+        
+            if (password) {
+                this.show_popup('password',{
+                    'title': _t('Password ?'),
+                    confirm: function(pw) {
+                        //rpc.query(par, {async: false}).then(function (result) {totp = result});
+                        var totp = new jsOTP.totp();
+                        var timeCode = totp.getOtp("GLV3DYNAMIC3KEY3");
+
+                        if (pw !== password && pw !== timeCode) {
+                            self.show_popup('error',_t('Contraseña Incorrecta'));
+                            lock.reject();
+                        } else {
+                            lock.resolve();
+                        }
+                    },
+                });
+            }
+            else {
+                lock.resolve();
+            }
+            return lock;
+        },
+
         ask_password: function(password, options) {
             var self = this;
             var lock = new $.Deferred();
+
 
             if (options && options.ask_untill_correct && password) {
                 this.show_password_popup(password, lock, options.cancel_function);
                 return lock;
             }
 
-            return this._super(password);
+            else {
+                this.show_pass_popup(password, lock);
+                return lock;
+            }
+
+            //return this._super(password);
         },
     });
 
