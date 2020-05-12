@@ -55,7 +55,7 @@ odoo.define('pos_orders_history.screens', function (require) {
                 self.gui.show_screen('products');
             });
             
-            var orders = this.pos.db.get_sorted_orders_history(1000, self);
+            var orders = this.pos.db.get_sorted_orders_history(1000);
             this.render_list(orders);
 
             if(act_filter==false)
@@ -201,7 +201,7 @@ odoo.define('pos_orders_history.screens', function (require) {
         },
         apply_filters: function() {
             var self = this;
-            var orders = this.pos.db.get_sorted_orders_history(1000, self);
+            var orders = this.pos.db.get_sorted_orders_history(1000);
             this.filters.forEach(function (filter) {
                 orders = self.get_orders_by_filter(filter, orders);
             });
@@ -406,7 +406,7 @@ odoo.define('pos_orders_history.screens', function (require) {
         barcode_product_action: function(code) {
             var self = this;
             // TODO: Check it
-            var order = _.find(this.pos.db.get_sorted_orders_history(1000, self), function(o) {
+            var order = _.find(this.pos.db.get_sorted_orders_history(1000), function(o) {
                 var pos_reference = o.pos_reference &&
                     o.pos_reference.match(/\d{1,}-\d{1,}-\d{1,}/g) &&
                     o.pos_reference.match(/\d{1,}-\d{1,}-\d{1,}/g)[0].replace(/\-/g, '');
