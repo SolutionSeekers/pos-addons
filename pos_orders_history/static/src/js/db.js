@@ -77,7 +77,7 @@ odoo.define('pos_orders_history.db', function (require) {
         //         }
         //     }
         //     return new_sorted_orders.slice(0, count);
-        get_sorted_orders_history: function (count, self) {
+        get_sorted_orders_history: function (count) {
             return this.sorted_orders.slice(0, count);
         },
         sorted_orders_history: function (orders) {
