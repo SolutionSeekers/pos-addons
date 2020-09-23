@@ -215,8 +215,13 @@ odoo.define('pos_keyboard.pos', function (require) {
                         price: 'price'
                     };
                     var token = e.keyCode;
-                    if (((token >= 96 && token <= 105) || token === 110) ||
-                        ((token >= 48 && token <= 57) || token === 190)) {
+                    if ((token >= 96 && token <= 105) || token === 110) {
+                        self.data.type = type.numchar;
+                        self.data.val = kc_lookup[token];
+                        is_number = true;
+                        ok = true;
+                    } else if (!(self.pos.config.numpad_only) 
+                    && ((token >= 48 && token <= 57) || token === 190)) {
                         self.data.type = type.numchar;
                         self.data.val = kc_lookup[token];
                         is_number = true;
